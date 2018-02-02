@@ -55,9 +55,11 @@ func GetCountry(ip string) string {
 }
 
 func load(filepath string) error {
-
 	arr = make([]ipRange, 0)
+	return loadFile(filepath)
+}
 
+func loadFile(filepath string) error {
 	file, err := os.Open(filepath)
 	if err != nil {
 		return err
@@ -66,30 +68,41 @@ func load(filepath string) error {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := scanner.Text()
-		line = strings.Replace(line, "\"", "", -1)
-
-		startIP, endIP, country, err := extract(line)
+		err = addRaw(scanner.Text())
 		if err != nil {
 			return err
 		}
-
-		startIPnum, err := ipToInt(startIP)
-		if err != nil {
-			return err
-		}
-
-		endIPnum, err := ipToInt(endIP)
-		if err != nil {
-			return err
-		}
-
-		arr = append(arr, ipRange{startIPnum, endIPnum, country})
-		ensureSorted(arr)
 	}
 
 	err = scanner.Err()
 	return err
+}
+
+//accept input string as follows
+//"{ip}","{ip}","{country}"
+func addRaw(line string) error {
+	//replace all double quotations
+	line = strings.Replace(line, "\"", "", -1)
+
+	startIP, endIP, country, err := extract(line)
+	if err != nil {
+		return err
+	}
+
+	startIPnum, err := ipToInt(startIP)
+	if err != nil {
+		return err
+	}
+
+	endIPnum, err := ipToInt(endIP)
+	if err != nil {
+		return err
+	}
+
+	arr = append(arr, ipRange{startIPnum, endIPnum, country})
+	ensureSorted(arr)
+
+	return nil
 }
 
 func ensureSorted(arr []ipRange) {
@@ -148,7 +161,6 @@ func binarySearch(arr []ipRange, key uint, start, end int) int {
 		}
 
 		mid := (start + end) / 2
-		println("------------------")
 		if key >= arr[mid].start && key <= arr[mid].end {
 			return mid
 		}

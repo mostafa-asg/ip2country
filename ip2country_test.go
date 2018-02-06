@@ -1,8 +1,32 @@
 package ip2country
 
 import (
+	"fmt"
+	"math/rand"
 	"testing"
 )
+
+func BenchmarkGetCountry(b *testing.B) {
+
+	err := Load("./dbip-country.csv")
+	if err != nil {
+		b.Fatal(err)
+	}
+
+	for i := 1; i <= b.N; i++ {
+		GetCountry(createRandomeIP())
+	}
+
+}
+
+func createRandomeIP() string {
+	p1 := rand.Int31n(256)
+	p2 := rand.Int31n(256)
+	p3 := rand.Int31n(256)
+	p4 := rand.Int31n(256)
+
+	return fmt.Sprintf("%d.%d.%d.%d", p1, p2, p3, p4)
+}
 
 func TestIPtoCountryLookup(t *testing.T) {
 

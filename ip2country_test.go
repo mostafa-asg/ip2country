@@ -74,6 +74,31 @@ func TestIPtoCountryLookup(t *testing.T) {
 	}
 }
 
+func TestGetCountryMulti(t *testing.T) {
+	err := Load("./dbip-country.csv")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	countries := GetCountryMulti("35.185.131.112", "35.185.133.191", "64.215.100.142", "94.46.48.46", "159.8.131.119")
+	if countries[0] != "US" {
+		t.Errorf("Expected US but found %s", countries[0])
+	}
+	if countries[1] != "TW" {
+		t.Errorf("Expected TW but found %s", countries[1])
+	}
+	if countries[2] != "BR" {
+		t.Errorf("Expected BR but found %s", countries[2])
+	}
+	if countries[3] != "GB" {
+		t.Errorf("Expected GB but found %s", countries[3])
+	}
+	if countries[4] != "NL" {
+		t.Errorf("Expected NL but found %s", countries[4])
+	}
+
+}
+
 func TestIPAddressToInt(t *testing.T) {
 	ipNumb, err := ipToInt("0.0.0.255")
 	if err != nil {

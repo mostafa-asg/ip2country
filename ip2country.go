@@ -30,6 +30,7 @@ var once sync.Once
 var loadError error
 
 //Load db-ip.com csv file
+//It must be called only once
 func Load(filepath string) error {
 	once.Do(func() {
 		loadError = load(filepath)
@@ -52,6 +53,26 @@ func GetCountry(ip string) string {
 	}
 
 	return arr[index].country
+}
+
+//GetCountryMulti is a batch version of GetCountry function
+//It allows you to pass many ip addresses as input, and will return countries as output
+//the first index of slice is the answer for the first input , the second index for the second input and so on
+func GetCountryMulti(ips ...string) []string {
+	size := len(ips)
+	answers := make([]string, size)
+	var wg sync.WaitGroup
+	wg.Add(size)
+
+	for i := 0; i < size; i++ {
+		go func(index int) {
+			answers[index] = GetCountry(ips[index])
+			wg.Done()
+		}(i)
+	}
+	wg.Wait()
+
+	return answers
 }
 
 func load(filepath string) error {

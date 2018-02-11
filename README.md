@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mostafa-asg/ip2country.svg?branch=master)](https://travis-ci.org/mostafa-asg/ip2country) [![Go Report Card](https://goreportcard.com/badge/github.com/mostafa-asg/ip2country)](https://goreportcard.com/report/github.com/mostafa-asg/ip2country)  
+[![Build Status](https://travis-ci.org/mostafa-asg/ip2country.svg?branch=master)](https://travis-ci.org/mostafa-asg/ip2country) [![Coverage Status](https://coveralls.io/repos/github/mostafa-asg/ip2country/badge.svg?branch=master)](https://coveralls.io/github/mostafa-asg/ip2country?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/mostafa-asg/ip2country)](https://goreportcard.com/report/github.com/mostafa-asg/ip2country)  
 **ip2country** is a golang package to find out IP's origin country. It uses [db-ip.com's csv](https://db-ip.com/db/download/country)
  file to provide answers.
  ### Install

@@ -1,3 +1,4 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/mostafa-asg/ip2country)](https://goreportcard.com/report/github.com/mostafa-asg/ip2country)  
 **ip2country** is a golang package to find out IP's origin country. It uses [db-ip.com's csv](https://db-ip.com/db/download/country)
  file to provide answers.
  ### Install
